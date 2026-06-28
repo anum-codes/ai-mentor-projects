@@ -13,6 +13,13 @@ import tempfile
 
 load_dotenv()
 
+# Works both locally and on Streamlit Cloud
+def get_api_key():
+    try:
+        return st.secrets["GEMINI_API_KEY"]
+    except:
+        return os.getenv("GEMINI_API_KEY")
+
 # Page config
 st.set_page_config(
     page_title="DocuMind",
@@ -73,7 +80,7 @@ if "doc_stats" not in st.session_state:
 def get_llm():
     return ChatGoogleGenerativeAI(
         model="gemini-3-flash-preview",
-        google_api_key=os.getenv("GEMINI_API_KEY"),
+        google_api_key=get_api_key(),
         temperature=0.3
     )
 
@@ -81,7 +88,7 @@ def get_llm():
 def get_embeddings():
     return GoogleGenerativeAIEmbeddings(
         model="gemini-embedding-001",
-        google_api_key=os.getenv("GEMINI_API_KEY")
+        google_api_key=get_api_key()
     )
 
 def process_pdf(uploaded_file):

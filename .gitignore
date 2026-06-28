@@ -1,1 +1,6 @@
 .env
+.streamlit/secrets.toml
+chroma_db/
+documind_db/
+__pycache__/
+*.pyc
